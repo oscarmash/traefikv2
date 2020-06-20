@@ -1,7 +1,15 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: helloworld-namespace
+  labels:
+    name: helloworld
+---
 kind: Ingress
 apiVersion: extensions/v1beta1
 metadata:
   name: helloworld-ingress
+  namespace: helloworld-namespace
   annotations:
     kubernetes.io/ingress.class: traefik
 spec:
@@ -18,6 +26,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: helloworld-service
+  namespace: helloworld-namespace
 spec:
   type: ClusterIP
   selector:
@@ -30,6 +39,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: helloworld-deployment
+  namespace: helloworld-namespace
 spec:
   replicas: 3
   selector:

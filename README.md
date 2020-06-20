@@ -12,5 +12,13 @@ k8s-master-3   Ready    master   4h35m   v1.17.7
 k8s-node-1     Ready    <none>   4h33m   v1.17.7
 k8s-node-2     Ready    <none>   4h33m   v1.17.7
 
+root@k8s-master-1:~# kubens 
+default
+helloworld-namespace	<---
+kube-node-lease
+kube-public
+kube-system
+metallb-system
+
 ```
 
