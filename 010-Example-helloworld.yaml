@@ -1,0 +1,47 @@
+kind: Ingress
+apiVersion: extensions/v1beta1
+metadata:
+  name: helloworld-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+    - host: helloworld.ilba.cat
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: helloworld-service
+              servicePort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworld-service
+spec:
+  type: ClusterIP
+  selector:
+    app: helloworld
+  ports:
+  - name: http
+    port: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helloworld-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: helloworld
+  template:
+    metadata:
+      labels:
+        app: helloworld
+    spec:
+      containers:
+      - name: hello-kubernetes
+        image: paulbouwer/hello-kubernetes:1.8
+        ports:
+        - containerPort: 8080
